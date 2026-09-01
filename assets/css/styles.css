@@ -521,14 +521,14 @@ a.practice-card:hover .pc-more svg { transform: translateX(3px); }
 
 /* ------------------------------ Prose / About ---------------------- */
 /* The real logo file (source-materials/logo.png), black background keyed out.
-   Left-aligned as a deliberate brand block at the top of a light section —
-   its navy letterforms need a light background to read. Used on the Home
-   "about preview" and near the About-page bio. */
+   Centered as a section header / brand mark above the headshot + bio columns
+   on a light section — its navy letterforms need a light background to read.
+   Used on the Home "about preview" and above the About-page bio. */
 .brand-lockup {
   display: block;
   width: clamp(240px, 34vw, 440px);
   height: auto;
-  margin: 0 0 var(--space-8);
+  margin: 0 auto var(--space-8);
 }
 @media (max-width: 700px) {
   .brand-lockup { margin-bottom: var(--space-6); }

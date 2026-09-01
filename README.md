@@ -16,8 +16,9 @@ Tagline: _Justice. Integrity. Results._
     brand accent, **not** the official logo.
   - The real logo file (`source-materials/logo.png`, black background keyed out →
     `assets/images/logo-lockup.png`, used as-is — no redraw) is placed on two
-    **light** sections where its navy letterforms read: left-aligned at the top of
-    the Home page's "about preview" section, and above the About page's bio.
+    **light** sections where its navy letterforms read: centered as a section
+    brand mark above the headshot/bio columns on the Home page's "about preview"
+    section, and above the About page's bio.
   See "Design notes" below.
 - Interactive: sticky/shrinking header, scroll-reveal animations (`IntersectionObserver`)
   with staggered grouped elements and a more pronounced entrance for section headings,
@@ -164,9 +165,10 @@ of Jamaica) before enabling it.
   in the dark navy header, hero or footer.
   - `assets/images/logo-lockup.png` — the whole official lockup with only its
     black background alpha-keyed away (nothing redrawn or recoloured) — is placed
-    left-aligned as a brand block on two cream sections where every part of it
-    reads: the top of the Home "about preview" section and above the About-page
-    bio. `alt` carries the full firm name, credentials and tagline.
+    (shared `.brand-lockup` rule) centered as a section brand mark above the
+    headshot/bio columns on two cream sections where every part of it reads: the
+    Home "about preview" section and the About-page bio section. `alt` carries
+    the full firm name, credentials and tagline.
   - The **navy hero** instead gets a decorative typographic monogram
     (`.hero-monogram` / `.hm-*` in `styles.css`): the letters "E S J" in
     Playfair Display with a gold "S", above a gold-rule-flanked "LAW OFFICES".
