@@ -8,9 +8,18 @@ Tagline: _Justice. Integrity. Results._
 - Plain **HTML5 + CSS3 + vanilla JavaScript** — no frameworks, no build step, no backend.
 - Multi-page site: Home, About, Practice Areas, Contact.
 - Mobile-first and responsive, with a hamburger menu on small screens.
-- Interactive: sticky/shrinking header, scroll-reveal animations (`IntersectionObserver`),
-  hover micro-interactions, back-to-top button, smooth in-page scrolling, and a
-  client-side–validated contact form wired for **Netlify Forms**.
+- Branding: the "ESJ" monogram appears in the header/nav on every page, large in the
+  home hero, and (smaller) in the footer beside the firm name. Header/hero/footer sit
+  on dark navy, so they use a cream-and-gold variant of the mark
+  (`assets/images/logo-mark-light.png`); the original navy/gold mark is kept for
+  light backgrounds and the favicons.
+- Interactive: sticky/shrinking header, scroll-reveal animations (`IntersectionObserver`)
+  with staggered grouped elements and a more pronounced entrance for section headings,
+  hero parallax + scale/fade on scroll, a slim scroll-progress bar, count-up stat
+  numbers, hover micro-interactions, back-to-top button, smooth in-page scrolling, and a
+  client-side–validated contact form wired for **Netlify Forms**. All scroll effects
+  use `transform`/`opacity` only, are `requestAnimationFrame`-throttled, and are
+  disabled/neutralised under `prefers-reduced-motion`.
 - Accessible: semantic landmarks, logical heading order, visible focus states,
   `alt` text, `aria-label`s on icon-only controls, respects `prefers-reduced-motion`.
 - SEO: per-page `<title>` / meta description, Open Graph tags, JSON-LD, favicon set,
@@ -143,10 +152,16 @@ of Jamaica) before enabling it.
   - Cream `#f8f5ee` (page background) — a warm off-white chosen to complement the
     gold, per the brief (the logo's own background is dark, not cream).
   These are defined once as CSS custom properties at the top of `styles.css`.
-- **Logo asset**: the "ESJ" monogram was cropped from the source PNG and its
-  near-black background made transparent → `assets/images/logo-mark.png`, used
-  in the header/footer against the navy bar. The firm name beside it is real
-  text (crisper, accessible, and lets the mark stay small).
+- **Logo assets**: the "ESJ" monogram was cropped from the source PNG and its
+  near-black background made transparent → `assets/images/logo-mark.png` (navy
+  letterforms + gold "S", for light backgrounds and the favicons). Because the
+  header, home hero and footer are all dark navy, a recoloured variant with
+  cream letterforms → `assets/images/logo-mark-light.png` is used in those three
+  places so the mark actually reads. The firm name beside it in the header/footer
+  is real text (crisper, accessible, keeps the image small); `alt=""` on those
+  instances is intentional. The hero instance carries `alt="ESJ Law Offices"`.
+  Regenerate the light variant with the recolour step in the image script noted
+  in git history if the source mark changes.
 - **Header is dark navy** so the navy/gold mark sits on it natively and to give
   the site a conventional, upmarket law-firm feel.
 - **Favicons / icons** were generated from the same monogram

@@ -33,7 +33,9 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="ESJ Law Offices — home">
-        <img src="assets/images/logo-mark.png" alt="" width="42" height="42" />
+        <!-- Light monogram for the dark header; alt="" is intentional — the
+             link carries an aria-label and the firm name follows as text. -->
+        <img class="brand-mark" src="assets/images/logo-mark-light.png" alt="" width="44" height="44" />
         <span class="brand-text">
           <span class="b1">ESJ Law Offices</span>
           <span class="b2">Elizabeth L. Salmon-James</span>
@@ -224,10 +226,13 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="brand-text">
+          <div class="footer-identity">
+            <img class="footer-mark" src="assets/images/logo-mark-light.png" alt="" width="46" height="46" />
+            <span class="brand-text">
             <span class="b1">ESJ Law Offices</span>
             <span class="b2">Elizabeth L. Salmon-James &middot; Attorney-at-Law &amp; Notary Public</span>
-          </span>
+            </span>
+          </div>
           <p>Justice. Integrity. Results. Personalized legal representation for corporate and
             individual clients in Jamaica.</p>
           <div class="social-row">

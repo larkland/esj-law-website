@@ -69,32 +69,166 @@
   }
 
   /* --------------------------------------------------------------------- */
+  /*  Count-up for stat numbers                                           */
+  /* --------------------------------------------------------------------- */
+  var formatNumber = function (n) {
+    return n.toLocaleString("en-US");
+  };
+
+  var finalizeCount = function (el) {
+    var target = parseFloat(el.getAttribute("data-count"));
+    if (isNaN(target)) return;
+    el.textContent = formatNumber(target) + (el.getAttribute("data-count-suffix") || "");
+  };
+
+  var runCountUp = function (el) {
+    if (el.dataset.counted) return;
+    el.dataset.counted = "1";
+
+    var target = parseFloat(el.getAttribute("data-count"));
+    if (isNaN(target)) return;
+
+    if (prefersReducedMotion) {
+      finalizeCount(el);
+      return;
+    }
+
+    var suffix = el.getAttribute("data-count-suffix") || "";
+    var duration = 1500;
+    var startTime = null;
+
+    var step = function (now) {
+      if (startTime === null) startTime = now;
+      var progress = Math.min(1, (now - startTime) / duration);
+      var eased = 1 - Math.pow(1 - progress, 3); /* easeOutCubic */
+      el.textContent = formatNumber(Math.round(target * eased)) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = formatNumber(target) + suffix;
+      }
+    };
+    requestAnimationFrame(step);
+  };
+
+  /* --------------------------------------------------------------------- */
   /*  Scroll-reveal animations (IntersectionObserver)                     */
+  /*  - grouped elements ([data-reveal-group]) stagger in sequence        */
+  /*  - stat numbers count up when their block reveals                    */
   /* --------------------------------------------------------------------- */
   var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  var countEls = Array.prototype.slice.call(document.querySelectorAll("[data-count]"));
 
-  if (revealEls.length) {
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      revealEls.forEach(function (el) {
-        el.classList.add("is-visible");
-      });
-    } else {
-      var io = new IntersectionObserver(
+  /* Pre-compute a static stagger delay for children of a reveal group. */
+  revealEls.forEach(function (el) {
+    var group = el.closest("[data-reveal-group]");
+    if (!group || el.hasAttribute("data-reveal-delay")) return;
+    var items = Array.prototype.slice.call(group.querySelectorAll(".reveal"));
+    var index = items.indexOf(el);
+    if (index > 0) {
+      el.style.transitionDelay = Math.min(index, 10) * 0.075 + "s";
+    }
+  });
+
+  var revealOne = function (el) {
+    el.classList.add("is-visible");
+    var counters = el.matches("[data-count]")
+      ? [el]
+      : Array.prototype.slice.call(el.querySelectorAll("[data-count]"));
+    counters.forEach(runCountUp);
+  };
+
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealEls.forEach(function (el) {
+      el.classList.add("is-visible");
+    });
+    countEls.forEach(finalizeCount);
+  } else {
+    var io = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            revealOne(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+    );
+    revealEls.forEach(function (el) {
+      io.observe(el);
+    });
+
+    /* Any stat number that isn't inside a .reveal still needs a trigger. */
+    var looseCounters = countEls.filter(function (el) {
+      return !el.closest(".reveal");
+    });
+    if (looseCounters.length) {
+      var countIo = new IntersectionObserver(
         function (entries, observer) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
+              runCountUp(entry.target);
               observer.unobserve(entry.target);
             }
           });
         },
-        { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+        { threshold: 0.6 }
       );
-      revealEls.forEach(function (el) {
-        io.observe(el);
+      looseCounters.forEach(function (el) {
+        countIo.observe(el);
       });
     }
   }
+
+  /* --------------------------------------------------------------------- */
+  /*  Scroll-progress bar + hero parallax (one rAF-throttled listener)    */
+  /* --------------------------------------------------------------------- */
+  var progressBar = document.createElement("div");
+  progressBar.className = "scroll-progress";
+  progressBar.setAttribute("aria-hidden", "true");
+  var progressFill = document.createElement("span");
+  progressBar.appendChild(progressFill);
+  document.body.appendChild(progressBar);
+
+  var heroInner = document.querySelector(".hero .hero-inner");
+  var heroSection = document.querySelector(".hero");
+  var scrollTicking = false;
+
+  var onScrollFx = function () {
+    var scrollTop =
+      window.pageYOffset || document.documentElement.scrollTop || 0;
+
+    /* progress bar: fraction of the page scrolled */
+    var docEl = document.documentElement;
+    var scrollable = docEl.scrollHeight - docEl.clientHeight;
+    var ratio = scrollable > 0 ? Math.min(1, Math.max(0, scrollTop / scrollable)) : 0;
+    progressFill.style.transform = "scaleX(" + ratio + ")";
+
+    /* hero parallax + gentle fade/scale as it leaves the viewport */
+    if (heroInner && heroSection && !prefersReducedMotion) {
+      var heroH = heroSection.offsetHeight || 1;
+      if (scrollTop < heroH) {
+        var k = scrollTop / heroH; /* 0 -> 1 across the hero */
+        var shift = scrollTop * 0.32;
+        var scale = 1 - k * 0.04;
+        heroInner.style.transform =
+          "translate3d(0," + shift.toFixed(1) + "px,0) scale(" + scale.toFixed(4) + ")";
+        heroInner.style.opacity = (1 - k * 0.9).toFixed(3);
+      }
+    }
+    scrollTicking = false;
+  };
+
+  var requestScrollFx = function () {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(onScrollFx);
+    }
+  };
+  onScrollFx();
+  window.addEventListener("scroll", requestScrollFx, { passive: true });
+  window.addEventListener("resize", requestScrollFx, { passive: true });
 
   /* --------------------------------------------------------------------- */
   /*  Back-to-top button                                                  */

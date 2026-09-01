@@ -210,11 +210,16 @@ p  { max-width: var(--measure); }
   color: var(--white);
 }
 .brand img {
-  height: 42px;
+  height: 44px;
   width: auto;
   transition: height .25s var(--ease);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .45));
 }
-.site-header.is-scrolled .brand img { height: 34px; }
+.site-header.is-scrolled .brand img { height: 36px; }
+@media (max-width: 560px) {
+  .brand { gap: .5rem; }
+  .brand img { height: 38px; }
+}
 .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
 .brand-text .b1 {
   font-family: var(--font-serif);
@@ -331,6 +336,14 @@ p  { max-width: var(--measure); }
   z-index: 1;
   padding-block: clamp(3.5rem, 9vw, 7rem);
   max-width: 46rem;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.hero-mark {
+  width: clamp(92px, 14vw, 164px);
+  height: auto;
+  margin-bottom: var(--space-5);
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, .4));
 }
 .hero h1 { color: var(--white); }
 .hero .tagline {
@@ -344,16 +357,59 @@ p  { max-width: var(--measure); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 .hero .btn--ghost { --btn-fg: var(--white); border-color: rgba(255, 255, 255, .6); }
 .hero .btn--ghost:hover { background: var(--white); color: var(--navy); }
-.hero-meta {
-  margin-top: var(--space-7);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-5);
-  color: var(--on-navy-dim);
-  font-size: .92rem;
+
+/* ------------------------------ Stats band ------------------------- */
+.stats-band { background: var(--cream-200); }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  text-align: center;
 }
-.hero-meta span { display: inline-flex; align-items: center; gap: .45rem; }
-.hero-meta strong { color: var(--white); font-family: var(--font-serif); font-size: 1.05rem; }
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  padding: var(--space-4) var(--space-3);
+}
+.stat + .stat { border-left: 1px solid var(--border); }
+.stat-num {
+  position: relative;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1;
+  color: var(--navy);
+  padding-bottom: .55rem;
+  font-variant-numeric: tabular-nums;
+}
+.stat-num::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 34px;
+  height: 3px;
+  transform: translateX(-50%);
+  background: var(--gold);
+  border-radius: 2px;
+}
+.stat-label {
+  color: var(--muted);
+  font-size: .95rem;
+  max-width: 24ch;
+}
+@media (max-width: 780px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+  .stat:nth-child(odd) { border-left: 0; }
+  .stat:nth-child(n + 3) { border-top: 1px solid var(--border); }
+}
+@media (max-width: 420px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat { border-left: 0 !important; }
+  .stat + .stat { border-top: 1px solid var(--border); }
+}
 
 /* --------------------------- Practice cards -------------------------- */
 .card-grid {
@@ -645,6 +701,13 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   border-bottom: 1px solid rgba(255,255,255,.12);
 }
 .footer-brand { display: grid; gap: var(--space-3); max-width: 26rem; }
+.footer-identity { display: flex; align-items: center; gap: .7rem; }
+.footer-mark {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .4));
+}
 .footer-brand .brand-text .b1 { color: var(--gold); }
 .site-footer h4 {
   font-family: var(--font-sans);
@@ -708,6 +771,36 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .reveal[data-reveal-delay="2"] { transition-delay: .16s; }
 .reveal[data-reveal-delay="3"] { transition-delay: .24s; }
 .reveal[data-reveal-delay="4"] { transition-delay: .32s; }
+
+/* Section headings get a longer, more pronounced entrance with a
+   gentle overshoot ease — distinct from the quieter body-text reveal. */
+.reveal--heading {
+  transform: translateY(38px);
+  transition-duration: .85s;
+  transition-timing-function: cubic-bezier(.17, .82, .28, 1.06);
+}
+
+/* Grouped reveals (cards, stats) are staggered by main.js, which sets an
+   incremental transition-delay on each child of a [data-reveal-group]. */
+
+/* ----------------------- Scroll progress bar ------------------- */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 150;
+  pointer-events: none;
+  background: transparent;
+}
+.scroll-progress > span {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  box-shadow: 0 0 8px rgba(201, 162, 39, .5);
+  will-change: transform;
+}
 
 /* ------------------------------ Misc ---------------------------- */
 .page-hero {
@@ -798,7 +891,6 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .form-row { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .brand-text .b2 { display: none; }
-  .hero-meta { gap: var(--space-4); }
 }
 
 /* ----------------------- Reduced motion --------------------- */
@@ -810,6 +902,9 @@ textarea.form-control { min-height: 140px; resize: vertical; }
     transition-duration: .001ms !important;
   }
   .reveal { opacity: 1 !important; transform: none !important; }
+  /* main.js skips the parallax entirely when reduced motion is set, but
+     guard here too in case the setting changes after load. */
+  .hero-inner { transform: none !important; opacity: 1 !important; }
 }
 
 /* ----------------------- Print ----------------------------- */
