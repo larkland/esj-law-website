@@ -209,18 +209,6 @@ p  { max-width: var(--measure); }
   text-decoration: none;
   color: var(--white);
 }
-.brand img {
-  height: 40px;
-  width: auto;
-  transition: height .25s var(--ease);
-  /* faint warm halo, echoing the glow baked into the source logo */
-  filter: drop-shadow(0 0 5px rgba(201, 162, 39, .35));
-}
-.site-header.is-scrolled .brand img { height: 34px; }
-@media (max-width: 560px) {
-  .brand { gap: .5rem; }
-  .brand img { height: 36px; }
-}
 .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
 .brand-text .b1 {
   font-family: var(--font-serif);
@@ -339,42 +327,6 @@ p  { max-width: var(--measure); }
   max-width: 46rem;
   will-change: transform, opacity;
   backface-visibility: hidden;
-}
-/* Home hero: the full E+S+J monogram cropped from the official logo. The
-   E and J are intentionally faint in the source and only read against a
-   dark field, so the wrapper lays a soft near-black radial behind the mark
-   (the hero navy alone is too light for them to register). */
-.hero-brand {
-  position: relative;
-  display: inline-block;
-  margin-bottom: var(--space-6);
-  isolation: isolate;
-}
-.hero-brand::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 155%;
-  height: 165%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at center,
-              rgba(0, 3, 10, .78), rgba(0, 3, 10, .38) 46%, transparent 72%);
-  z-index: 0;
-  pointer-events: none;
-}
-.hero-mark {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: clamp(224px, 42vw, 424px);
-  height: auto;
-  filter: drop-shadow(0 14px 36px rgba(0, 0, 0, .5))
-          drop-shadow(0 0 30px rgba(201, 162, 39, .12));
-}
-@media (max-width: 560px) {
-  .hero-brand { margin-bottom: var(--space-5); }
-  .hero-mark { width: min(78vw, 320px); }
 }
 .hero h1 { color: var(--white); }
 .hero .tagline {
@@ -522,6 +474,17 @@ a.practice-card:hover .pc-more svg { transform: translateX(3px); }
 .feature p { font-size: .96rem; color: inherit; opacity: .92; margin: 0; }
 
 /* ------------------------------ Prose / About ---------------------- */
+/* Official logo lockup — sits on a light section so its navy letterforms read. */
+.brand-lockup {
+  display: block;
+  width: clamp(260px, 46vw, 460px);
+  height: auto;
+  margin: 0 auto var(--space-8);
+}
+@media (max-width: 700px) {
+  .brand-lockup { margin-bottom: var(--space-7); }
+}
+
 .split {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -732,13 +695,6 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   border-bottom: 1px solid rgba(255,255,255,.12);
 }
 .footer-brand { display: grid; gap: var(--space-3); max-width: 26rem; }
-.footer-identity { display: flex; align-items: center; gap: .7rem; }
-.footer-mark {
-  height: 42px;
-  width: auto;
-  flex: none;
-  filter: drop-shadow(0 0 5px rgba(201, 162, 39, .3));
-}
 .footer-brand .brand-text .b1 { color: var(--gold); }
 .site-footer h4 {
   font-family: var(--font-sans);

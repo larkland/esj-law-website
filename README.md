@@ -8,11 +8,12 @@ Tagline: _Justice. Integrity. Results._
 - Plain **HTML5 + CSS3 + vanilla JavaScript** — no frameworks, no build step, no backend.
 - Multi-page site: Home, About, Practice Areas, Contact.
 - Mobile-first and responsive, with a hamburger menu on small screens.
-- Branding: two crops of the official logo (`source-materials/logo.png`). The
-  home hero shows the **full E+S+J monogram** (`logo-mark-hero.png`) large — the
-  one place the deliberately-faint E/J read. The header/nav and footer show a
-  compact crop of **just the gold "S" ribbon** (`logo-icon.png`), which stays
-  legible at small size, beside the firm-name text. See "Design notes" below.
+- Branding: the header/nav, hero and footer use a plain text wordmark (firm name
+  + tagline as text — no logo graphic). The official logo
+  (`source-materials/logo.png`) appears once, as the full lockup
+  (`assets/images/logo-lockup.png`), at the top of the About page's bio section —
+  a light/cream background, which its navy letterforms need in order to read.
+  See "Design notes" below.
 - Interactive: sticky/shrinking header, scroll-reveal animations (`IntersectionObserver`)
   with staggered grouped elements and a more pronounced entrance for section headings,
   hero parallax + scale/fade on scroll, a slim scroll-progress bar, count-up stat
@@ -152,27 +153,16 @@ of Jamaica) before enabling it.
   - Cream `#f8f5ee` (page background) — a warm off-white chosen to complement the
     gold, per the brief (the logo's own background is dark, not cream).
   These are defined once as CSS custom properties at the top of `styles.css`.
-- **Logo assets** — both are straight crops of the official file
-  `source-materials/logo.png` (a dark, glowing composition: a bold opaque gold
-  "S" ribbon between deliberately faint, translucent navy "E" and "J"
-  letterforms). Nothing is redrawn; only cropped, alpha-keyed to drop the black
-  field, and resized.
-  - `assets/images/logo-mark-hero.png` — the **full E+S+J monogram**, used large
-    in the home hero (the one spot big enough for the faint E/J to read). A
-    luminance alpha-key removes the black background while preserving the glow
-    and the faint letters. The hero wrapper (`.hero-brand::before`) lays a soft
-    near-black radial behind it because the hero navy on its own is too light
-    for the E/J to register. `alt="ESJ Law Offices — the E S J monogram"`.
-  - `assets/images/logo-icon.png` — **only the gold "S" ribbon**, cropped tight;
-    the full mark is illegible at nav/footer size. Same luminance key plus a
-    warm-channel mask so the navy ghosts of E/J that fall inside the crop
-    rectangle drop out. Used in the header and footer next to the real
-    "ESJ Law Offices" / attorney-name text; `alt=""` there is intentional.
-  - Note: in the source file the top of the "S" sits flush against the image's
-    top edge, so `logo-mark-hero.png` has no padding above the S — that is the
-    original, not a crop mistake.
-- **Header is dark navy** so the gold "S" sits on it natively and to give the
-  site a conventional, upmarket law-firm feel.
+- **Logo placement** — `source-materials/logo.png` is a dark, glowing composition
+  (gold "S" ribbon between navy "E"/"J" letterforms, plus the firm wordmark and
+  tagline). Its navy elements vanish on a blue background, so it is **not** used
+  in the dark navy header, hero or footer — those carry a plain text wordmark
+  only. Instead `assets/images/logo-lockup.png` — the whole official lockup with
+  only its black background alpha-keyed away, nothing redrawn or recoloured — is
+  placed once, centred at the top of the About page's bio section, on that
+  section's cream background where every part of it reads cleanly. `alt` carries
+  the full firm name, credentials and tagline.
+- **Header is dark navy** to give the site a conventional, upmarket law-firm feel.
 - **Favicons / icons** (`favicon.ico` + 16/32/48/192/512 PNGs,
   `apple-touch-icon.png`) and the Open Graph image (`assets/images/og-image.jpg`)
   were generated earlier from the monogram and are unchanged.
