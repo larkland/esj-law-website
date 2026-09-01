@@ -8,11 +8,16 @@ Tagline: _Justice. Integrity. Results._
 - Plain **HTML5 + CSS3 + vanilla JavaScript** — no frameworks, no build step, no backend.
 - Multi-page site: Home, About, Practice Areas, Contact.
 - Mobile-first and responsive, with a hamburger menu on small screens.
-- Branding: the header/nav, hero and footer use a plain text wordmark (firm name
-  + tagline as text — no logo graphic). The official logo
-  (`source-materials/logo.png`) appears once, as the full lockup
-  (`assets/images/logo-lockup.png`), at the top of the About page's bio section —
-  a light/cream background, which its navy letterforms need in order to read.
+- Branding:
+  - Header/nav and footer: plain text wordmark (no logo graphic).
+  - Home hero (navy): a small **decorative CSS/type monogram** — " E S J" in the
+    serif face with a gold "S", over a rule-flanked "LAW OFFICES". Built entirely
+    from markup + CSS in the cream/gold palette so it reads on navy. This is a
+    brand accent, **not** the official logo.
+  - The real logo file (`source-materials/logo.png`, black background keyed out →
+    `assets/images/logo-lockup.png`, used as-is — no redraw) is placed on two
+    **light** sections where its navy letterforms read: left-aligned at the top of
+    the Home page's "about preview" section, and above the About page's bio.
   See "Design notes" below.
 - Interactive: sticky/shrinking header, scroll-reveal animations (`IntersectionObserver`)
   with staggered grouped elements and a more pronounced entrance for section headings,
@@ -156,12 +161,17 @@ of Jamaica) before enabling it.
 - **Logo placement** — `source-materials/logo.png` is a dark, glowing composition
   (gold "S" ribbon between navy "E"/"J" letterforms, plus the firm wordmark and
   tagline). Its navy elements vanish on a blue background, so it is **not** used
-  in the dark navy header, hero or footer — those carry a plain text wordmark
-  only. Instead `assets/images/logo-lockup.png` — the whole official lockup with
-  only its black background alpha-keyed away, nothing redrawn or recoloured — is
-  placed once, centred at the top of the About page's bio section, on that
-  section's cream background where every part of it reads cleanly. `alt` carries
-  the full firm name, credentials and tagline.
+  in the dark navy header, hero or footer.
+  - `assets/images/logo-lockup.png` — the whole official lockup with only its
+    black background alpha-keyed away (nothing redrawn or recoloured) — is placed
+    left-aligned as a brand block on two cream sections where every part of it
+    reads: the top of the Home "about preview" section and above the About-page
+    bio. `alt` carries the full firm name, credentials and tagline.
+  - The **navy hero** instead gets a decorative typographic monogram
+    (`.hero-monogram` / `.hm-*` in `styles.css`): the letters "E S J" in
+    Playfair Display with a gold "S", above a gold-rule-flanked "LAW OFFICES".
+    Pure CSS + text, `aria-hidden` (decorative — the firm name is in the header
+    and lead copy). It is a matching accent, not a stand-in for the logo file.
 - **Header is dark navy** to give the site a conventional, upmarket law-firm feel.
 - **Favicons / icons** (`favicon.ico` + 16/32/48/192/512 PNGs,
   `apple-touch-icon.png`) and the Open Graph image (`assets/images/og-image.jpg`)
