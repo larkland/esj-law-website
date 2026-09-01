@@ -1,0 +1,42 @@
+# Netlify configuration for ESJ Law Offices
+# This site is 100% static — there is nothing to build.
+
+[build]
+  # No build step: publish the repository root as-is.
+  publish = "."
+  command = ""
+
+# Netlify Forms is enabled automatically when a form with
+# `data-netlify="true"` is present in the deployed HTML (see contact.html).
+# No extra config is required here for the contact form to work.
+
+# --- Security / caching headers -------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# --- Pretty URLs ---------------------------------------------------------
+# Let visitors reach /about as well as /about.html
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/practice-areas"
+  to = "/practice-areas.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200

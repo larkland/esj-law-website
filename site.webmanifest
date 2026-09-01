@@ -1,0 +1,13 @@
+{
+  "name": "ESJ Law Offices",
+  "short_name": "ESJ Law",
+  "description": "The practice of Elizabeth L. Salmon-James, Attorney-at-Law and Notary Public.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f5ee",
+  "theme_color": "#01152e",
+  "icons": [
+    { "src": "/assets/images/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/images/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

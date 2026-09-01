@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update the host below if the production domain differs.
+Sitemap: https://www.esjlawoffices.com/sitemap.xml
