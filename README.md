@@ -8,11 +8,11 @@ Tagline: _Justice. Integrity. Results._
 - Plain **HTML5 + CSS3 + vanilla JavaScript** — no frameworks, no build step, no backend.
 - Multi-page site: Home, About, Practice Areas, Contact.
 - Mobile-first and responsive, with a hamburger menu on small screens.
-- Branding: the "ESJ" monogram appears in the header/nav on every page, large in the
-  home hero, and (smaller) in the footer beside the firm name. Header/hero/footer sit
-  on dark navy, so they use a cream-and-gold variant of the mark
-  (`assets/images/logo-mark-light.png`); the original navy/gold mark is kept for
-  light backgrounds and the favicons.
+- Branding: two crops of the official logo (`source-materials/logo.png`). The
+  home hero shows the **full E+S+J monogram** (`logo-mark-hero.png`) large — the
+  one place the deliberately-faint E/J read. The header/nav and footer show a
+  compact crop of **just the gold "S" ribbon** (`logo-icon.png`), which stays
+  legible at small size, beside the firm-name text. See "Design notes" below.
 - Interactive: sticky/shrinking header, scroll-reveal animations (`IntersectionObserver`)
   with staggered grouped elements and a more pronounced entrance for section headings,
   hero parallax + scale/fade on scroll, a slim scroll-progress bar, count-up stat
@@ -152,21 +152,30 @@ of Jamaica) before enabling it.
   - Cream `#f8f5ee` (page background) — a warm off-white chosen to complement the
     gold, per the brief (the logo's own background is dark, not cream).
   These are defined once as CSS custom properties at the top of `styles.css`.
-- **Logo assets**: the "ESJ" monogram was cropped from the source PNG and its
-  near-black background made transparent → `assets/images/logo-mark.png` (navy
-  letterforms + gold "S", for light backgrounds and the favicons). Because the
-  header, home hero and footer are all dark navy, a recoloured variant with
-  cream letterforms → `assets/images/logo-mark-light.png` is used in those three
-  places so the mark actually reads. The firm name beside it in the header/footer
-  is real text (crisper, accessible, keeps the image small); `alt=""` on those
-  instances is intentional. The hero instance carries `alt="ESJ Law Offices"`.
-  Regenerate the light variant with the recolour step in the image script noted
-  in git history if the source mark changes.
-- **Header is dark navy** so the navy/gold mark sits on it natively and to give
-  the site a conventional, upmarket law-firm feel.
-- **Favicons / icons** were generated from the same monogram
-  (`favicon.ico` + 16/32/48/192/512 PNGs, `apple-touch-icon.png`), plus an
-  Open Graph image (`assets/images/og-image.jpg`).
+- **Logo assets** — both are straight crops of the official file
+  `source-materials/logo.png` (a dark, glowing composition: a bold opaque gold
+  "S" ribbon between deliberately faint, translucent navy "E" and "J"
+  letterforms). Nothing is redrawn; only cropped, alpha-keyed to drop the black
+  field, and resized.
+  - `assets/images/logo-mark-hero.png` — the **full E+S+J monogram**, used large
+    in the home hero (the one spot big enough for the faint E/J to read). A
+    luminance alpha-key removes the black background while preserving the glow
+    and the faint letters. The hero wrapper (`.hero-brand::before`) lays a soft
+    near-black radial behind it because the hero navy on its own is too light
+    for the E/J to register. `alt="ESJ Law Offices — the E S J monogram"`.
+  - `assets/images/logo-icon.png` — **only the gold "S" ribbon**, cropped tight;
+    the full mark is illegible at nav/footer size. Same luminance key plus a
+    warm-channel mask so the navy ghosts of E/J that fall inside the crop
+    rectangle drop out. Used in the header and footer next to the real
+    "ESJ Law Offices" / attorney-name text; `alt=""` there is intentional.
+  - Note: in the source file the top of the "S" sits flush against the image's
+    top edge, so `logo-mark-hero.png` has no padding above the S — that is the
+    original, not a crop mistake.
+- **Header is dark navy** so the gold "S" sits on it natively and to give the
+  site a conventional, upmarket law-firm feel.
+- **Favicons / icons** (`favicon.ico` + 16/32/48/192/512 PNGs,
+  `apple-touch-icon.png`) and the Open Graph image (`assets/images/og-image.jpg`)
+  were generated earlier from the monogram and are unchanged.
 - **Fonts**: Playfair Display (headings) via Google Fonts with a serif fallback;
   a system UI sans-serif stack for body text (no webfont download for body).
 - **Type / bio content** on About and Practice Areas is taken verbatim in

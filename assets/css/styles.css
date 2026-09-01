@@ -210,15 +210,16 @@ p  { max-width: var(--measure); }
   color: var(--white);
 }
 .brand img {
-  height: 44px;
+  height: 40px;
   width: auto;
   transition: height .25s var(--ease);
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .45));
+  /* faint warm halo, echoing the glow baked into the source logo */
+  filter: drop-shadow(0 0 5px rgba(201, 162, 39, .35));
 }
-.site-header.is-scrolled .brand img { height: 36px; }
+.site-header.is-scrolled .brand img { height: 34px; }
 @media (max-width: 560px) {
   .brand { gap: .5rem; }
-  .brand img { height: 38px; }
+  .brand img { height: 36px; }
 }
 .brand-text { display: flex; flex-direction: column; line-height: 1.05; }
 .brand-text .b1 {
@@ -339,11 +340,41 @@ p  { max-width: var(--measure); }
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
+/* Home hero: the full E+S+J monogram cropped from the official logo. The
+   E and J are intentionally faint in the source and only read against a
+   dark field, so the wrapper lays a soft near-black radial behind the mark
+   (the hero navy alone is too light for them to register). */
+.hero-brand {
+  position: relative;
+  display: inline-block;
+  margin-bottom: var(--space-6);
+  isolation: isolate;
+}
+.hero-brand::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 155%;
+  height: 165%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center,
+              rgba(0, 3, 10, .78), rgba(0, 3, 10, .38) 46%, transparent 72%);
+  z-index: 0;
+  pointer-events: none;
+}
 .hero-mark {
-  width: clamp(92px, 14vw, 164px);
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: clamp(224px, 42vw, 424px);
   height: auto;
-  margin-bottom: var(--space-5);
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, .4));
+  filter: drop-shadow(0 14px 36px rgba(0, 0, 0, .5))
+          drop-shadow(0 0 30px rgba(201, 162, 39, .12));
+}
+@media (max-width: 560px) {
+  .hero-brand { margin-bottom: var(--space-5); }
+  .hero-mark { width: min(78vw, 320px); }
 }
 .hero h1 { color: var(--white); }
 .hero .tagline {
@@ -703,10 +734,10 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .footer-brand { display: grid; gap: var(--space-3); max-width: 26rem; }
 .footer-identity { display: flex; align-items: center; gap: .7rem; }
 .footer-mark {
-  width: 46px;
-  height: 46px;
+  height: 42px;
+  width: auto;
   flex: none;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .4));
+  filter: drop-shadow(0 0 5px rgba(201, 162, 39, .3));
 }
 .footer-brand .brand-text .b1 { color: var(--gold); }
 .site-footer h4 {
