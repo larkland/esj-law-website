@@ -119,19 +119,20 @@ The contact form will need an external form service, as with Cloudflare Pages.
 
 ## Before go-live — fill in the `TODO`s
 
-The attorney profile PDF did not include contact/office specifics, so these are
+The attorney profile PDF did not include every office specific, so these are
 left as clearly marked `<!-- TODO: -->` placeholders in the HTML:
 
 | Placeholder | Where | What to add |
 |---|---|---|
-| Phone number | header + footer + `contact.html` (`tel:+1000000000`, `(000) 000-0000`) | Real office phone |
-| Street address | footer `<address>`, `contact.html` office details | Full mailing address |
-| Public email | footer + `contact.html` (`info@esjlawoffices.com`) | Confirm the real address |
 | Office hours | `contact.html` | Confirm opening hours |
-| Social links | every page footer + `contact.html` (`href="#"`) | Real profile URLs, or delete unused icons |
 | Attorney headshot | `index.html`, `about.html` (portrait placeholder) | Add `assets/images/elizabeth-salmon-james.jpg` and swap in the `<img>` |
 | Google Map | `contact.html` (`#map`) | Paste the Maps embed `<iframe>` |
 | Production domain | `sitemap.xml`, `robots.txt`, `<link rel="canonical">` and `og:url` in each HTML file | Currently assumes `https://www.esjlawoffices.com/` — change if the real domain differs |
+
+Contact details are now live sitewide: phone **876-615-5169** (plus
+**+1 876-754-0043** on the Contact page), email **info@salmonlawoffices.com**,
+address **2A, 10 Strathairn Ave, Kingston, Jamaica**, and a LinkedIn link in
+each footer. Facebook / Instagram icons were removed pending real profiles.
 
 Search the project for `TODO:` to find them all.
 

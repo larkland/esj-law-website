@@ -321,10 +321,11 @@ p  { max-width: var(--measure); }
   pointer-events: none;
 }
 
-/* Rotating photo backdrop — landscape images cross-fade behind a heavy navy
-   wash so the hero keeps its original near-solid-navy, moody look. The wash
-   carries the same gold top-right glow the plain hero had. Falls back to the
-   plain navy gradient above when JS is off or reduced motion is requested
+/* Rotating photo backdrop — landscape images cross-fade behind a light navy
+   wash so the photos read clearly while the hero keeps its moody navy mood.
+   The wash carries the same gold top-right glow the plain hero had and stays
+   a little denser behind the heading column for text contrast. Falls back to
+   the plain navy gradient above when JS is off or reduced motion is requested
    (main.js then leaves a single static image showing). */
 .hero-media {
   position: absolute;
@@ -351,9 +352,10 @@ p  { max-width: var(--measure); }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(1100px 460px at 82% -12%, rgba(201, 162, 39, .20), transparent 60%),
-    radial-gradient(130% 120% at 12% 24%, rgba(1, 21, 46, .70) 0%, rgba(1, 21, 46, .84) 55%, rgba(1, 21, 46, .90) 100%),
-    linear-gradient(180deg, rgba(1, 31, 75, .80) 0%, rgba(1, 21, 46, .93) 100%);
+    radial-gradient(1100px 460px at 82% -12%, rgba(201, 162, 39, .22), transparent 60%),
+    radial-gradient(70% 60% at 14% 32%, rgba(1, 21, 46, .44), transparent 72%),
+    linear-gradient(95deg, rgba(1, 21, 46, .64) 0%, rgba(1, 21, 46, .46) 42%, rgba(1, 21, 46, .24) 70%, rgba(1, 21, 46, .32) 100%),
+    linear-gradient(180deg, rgba(1, 21, 46, .28) 0%, rgba(1, 21, 46, .26) 40%, rgba(1, 21, 46, .58) 100%);
 }
 .hero-inner {
   position: relative;
@@ -724,6 +726,10 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .info-list a { text-decoration: none; font-weight: 600; color: var(--navy-700); }
 .info-list a:hover { color: var(--gold); }
 .info-list .sub { font-size: .85rem; color: var(--muted); }
+/* Stack each value + its label on its own line (handles the two phone
+   numbers and the multi-line address in the office-details block). */
+.info-list li > span:last-child { display: grid; gap: .15rem; }
+.info-list li > span:last-child > a { width: max-content; max-width: 100%; }
 
 .map-embed {
   border-radius: var(--radius-lg);
@@ -942,6 +948,56 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   background: var(--white);
   border-top: 1px solid var(--border);
 }
+/* Match the card system: gentle lift + slow zoom on hover. */
+.media-band { transition: box-shadow .25s var(--ease), border-color .25s var(--ease); }
+.media-band img { transition: transform .7s var(--ease); }
+@media (hover: hover) {
+  .media-band:hover { box-shadow: var(--shadow-md); border-color: var(--gold); }
+  .media-band:hover img { transform: scale(1.045); }
+}
+
+/* ---------------------- Photo-backed navy sections --------------------- */
+/* A navy section (page hero, or the home "why choose us" band) with a faint
+   photo behind it — the same photo + navy-wash + gold-glow treatment as the
+   home hero, so the imagery feels like one system. The photo drifts with a
+   very slow Ken Burns pan; both are dropped for prefers-reduced-motion. */
+@keyframes kenburns {
+  from { transform: scale(1.03) translate3d(0, 0, 0); }
+  to   { transform: scale(1.12) translate3d(-1.6%, -1.8%, 0); }
+}
+.has-photo-bg { position: relative; overflow: hidden; }
+.has-photo-bg > .container { position: relative; z-index: 1; }
+.photo-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--navy-deep);
+  pointer-events: none;
+}
+.photo-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  opacity: .92;
+  animation: kenburns 40s var(--ease) alternate infinite;
+  will-change: transform;
+}
+.photo-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1000px 420px at 84% -20%, rgba(201, 162, 39, .18), transparent 60%),
+    linear-gradient(180deg, rgba(1, 21, 46, .74) 0%, rgba(1, 21, 46, .88) 100%);
+}
+/* The home feature band carries body copy, so it needs a heavier wash. */
+.section--navy.has-photo-bg .photo-bg::after {
+  background:
+    radial-gradient(1000px 420px at 84% -18%, rgba(201, 162, 39, .16), transparent 60%),
+    linear-gradient(180deg, rgba(1, 21, 46, .82) 0%, rgba(1, 21, 46, .92) 100%);
+}
 
 /* --------------------------- Responsive ------------------------ */
 @media (max-width: 960px) {
@@ -1004,6 +1060,9 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   /* main.js skips the parallax entirely when reduced motion is set, but
      guard here too in case the setting changes after load. */
   .hero-inner { transform: none !important; opacity: 1 !important; }
+  /* Hold the Ken Burns / hover-zoom photos completely still. */
+  .photo-bg img,
+  .media-band img { animation: none !important; transform: none !important; }
 }
 
 /* ----------------------- Print ----------------------------- */
