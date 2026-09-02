@@ -31,6 +31,9 @@
 
   <link rel="stylesheet" href="assets/css/styles.css" />
 
+  <!-- First hero backdrop image: fetch early so the hero paints with it. -->
+  <link rel="preload" as="image" href="assets/images/hero/hero-01.jpg" fetchpriority="high" />
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -90,6 +93,20 @@
 
     <!-- ================= HERO ================= -->
     <section class="hero">
+      <!-- Rotating photo backdrop. Slide 1 loads immediately; the rest carry
+           data-src and are fetched by main.js just before they're needed, so
+           they don't compete with the initial page load. With JS off, slide 1
+           simply stays visible under the navy wash. -->
+      <div class="hero-media" aria-hidden="true">
+        <img class="hero-slide is-active" src="assets/images/hero/hero-01.jpg"
+             alt="" fetchpriority="high" decoding="async" width="1760" height="1173" />
+        <img class="hero-slide" data-src="assets/images/hero/hero-02.jpg"
+             alt="" decoding="async" width="1760" height="1173" />
+        <img class="hero-slide" data-src="assets/images/hero/hero-03.jpg"
+             alt="" decoding="async" width="1760" height="1173" />
+        <img class="hero-slide" data-src="assets/images/hero/hero-04.jpg"
+             alt="" decoding="async" width="1600" height="1067" />
+      </div>
       <div class="container hero-inner">
         <div class="hero-monogram reveal" aria-hidden="true">
           <span class="hm-mark">E<span>S</span>J</span>

@@ -231,6 +231,71 @@
   window.addEventListener("resize", requestScrollFx, { passive: true });
 
   /* --------------------------------------------------------------------- */
+  /*  Hero rotating background: slow cross-fade between photos             */
+  /*  - skipped entirely for reduced motion or a single slide             */
+  /*  - deferred slides (data-src) are fetched just before they're shown  */
+  /*  - pauses while the tab is hidden                                    */
+  /* --------------------------------------------------------------------- */
+  var heroMedia = document.querySelector(".hero-media");
+  if (heroMedia) {
+    var slides = Array.prototype.slice.call(
+      heroMedia.querySelectorAll(".hero-slide")
+    );
+
+    var loadSlide = function (img) {
+      if (img && !img.getAttribute("src") && img.dataset.src) {
+        img.src = img.dataset.src;
+      }
+    };
+
+    if (slides.length > 1 && !prefersReducedMotion) {
+      var HOLD_MS = 6500; /* time each image holds (fade is 1.5s in CSS) */
+      var activeIdx = 0;
+      var heroTimer = null;
+
+      /* Warm up the next image so the first transition isn't a hard cut. */
+      loadSlide(slides[1]);
+
+      var advanceHero = function () {
+        var nextIdx = (activeIdx + 1) % slides.length;
+        var current = slides[activeIdx];
+        var next = slides[nextIdx];
+
+        var swap = function () {
+          current.classList.remove("is-active");
+          next.classList.add("is-active");
+          activeIdx = nextIdx;
+          /* Pre-fetch the following one during this hold. */
+          loadSlide(slides[(nextIdx + 1) % slides.length]);
+        };
+
+        loadSlide(next);
+        if (next.complete && next.naturalWidth) {
+          swap();
+        } else {
+          next.addEventListener("load", swap, { once: true });
+        }
+      };
+
+      var startHero = function () {
+        if (!heroTimer) heroTimer = setInterval(advanceHero, HOLD_MS);
+      };
+      var stopHero = function () {
+        if (heroTimer) {
+          clearInterval(heroTimer);
+          heroTimer = null;
+        }
+      };
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) stopHero();
+        else startHero();
+      });
+      startHero();
+    }
+  }
+
+  /* --------------------------------------------------------------------- */
   /*  Back-to-top button                                                  */
   /* --------------------------------------------------------------------- */
   var backToTop = document.querySelector(".back-to-top");

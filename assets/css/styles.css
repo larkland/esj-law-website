@@ -320,6 +320,41 @@ p  { max-width: var(--measure); }
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M0 59h60M59 0v60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/></svg>');
   pointer-events: none;
 }
+
+/* Rotating photo backdrop — landscape images cross-fade behind a heavy navy
+   wash so the hero keeps its original near-solid-navy, moody look. The wash
+   carries the same gold top-right glow the plain hero had. Falls back to the
+   plain navy gradient above when JS is off or reduced motion is requested
+   (main.js then leaves a single static image showing). */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--navy-deep);
+  pointer-events: none;
+}
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+  opacity: 0;
+  transition: opacity 1.5s var(--ease);
+  will-change: opacity;
+}
+.hero-slide.is-active { opacity: 1; }
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1100px 460px at 82% -12%, rgba(201, 162, 39, .20), transparent 60%),
+    radial-gradient(130% 120% at 12% 24%, rgba(1, 21, 46, .70) 0%, rgba(1, 21, 46, .84) 55%, rgba(1, 21, 46, .90) 100%),
+    linear-gradient(180deg, rgba(1, 31, 75, .80) 0%, rgba(1, 21, 46, .93) 100%);
+}
 .hero-inner {
   position: relative;
   z-index: 1;
@@ -879,6 +914,34 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 }
 .detail-card h3 .pc-icon svg { width: 20px; height: 20px; fill: currentColor; }
 .detail-card ul { margin-top: var(--space-3); color: var(--muted); }
+
+/* ------------------------- Photo bands / figures ------------------------ */
+/* A single tasteful photo used to break up a text-heavy page. Styled like
+   the site's cards (rounded, hairline border, soft shadow) so it reads as
+   part of the system rather than a dropped-in stock image. */
+.media-band {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  background: var(--cream-200);
+}
+.section--navy .media-band,
+.section--cream2 .media-band { border-color: var(--border); }
+.media-band img {
+  width: 100%;
+  height: clamp(220px, 34vw, 380px);
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+.media-band figcaption {
+  padding: var(--space-3) var(--space-4);
+  font-size: .85rem;
+  color: var(--muted);
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
 
 /* --------------------------- Responsive ------------------------ */
 @media (max-width: 960px) {
