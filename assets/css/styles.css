@@ -1039,7 +1039,6 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   }
   .nav-link::after { display: none; }
   .nav-link[aria-current="page"] { background: rgba(201,162,39,.12); }
-  .primary-nav .btn { margin-top: var(--space-4); justify-content: center; }
 }
 
 @media (max-width: 560px) {
