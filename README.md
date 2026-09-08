@@ -1,6 +1,7 @@
-# ESJ Law Offices — marketing website
+# Elizabeth James-Salmon — marketing website
 
-A fast, fully static marketing website for **ESJ Law Offices**, the practice of
+A fast, fully static marketing website for **Elizabeth James-Salmon** (the registered
+practice name), the practice of
 **Elizabeth L. Salmon-James, Attorney-at-Law & Notary Public**.
 
 Tagline: _Justice. Integrity. Results._
@@ -124,15 +125,16 @@ left as clearly marked `<!-- TODO: -->` placeholders in the HTML:
 
 | Placeholder | Where | What to add |
 |---|---|---|
-| Office hours | `contact.html` | Confirm opening hours |
 | Attorney headshot | `index.html`, `about.html` (portrait placeholder) | Add `assets/images/elizabeth-salmon-james.jpg` and swap in the `<img>` |
 | Google Map | `contact.html` (`#map`) | Paste the Maps embed `<iframe>` |
 | Production domain | `sitemap.xml`, `robots.txt`, `<link rel="canonical">` and `og:url` in each HTML file | Currently assumes `https://www.esjlawoffices.com/` — change if the real domain differs |
 
 Contact details are now live sitewide: phone **876-615-5169** (plus
-**+1 876-754-0043** on the Contact page), email **info@salmonlawoffices.com**,
-address **2A, 10 Strathairn Ave, Kingston, Jamaica**, and a LinkedIn link in
-each footer. Facebook / Instagram icons were removed pending real profiles.
+**+1 876-754-0043** on the Contact page), email **info@salmonlawoffices.com**
+(general) and **esalmon@salmonlawoffices.com** (direct), office hours
+**Mon–Thurs 8:30am–4:30pm, Fri 8:30am–4:00pm**, address
+**2A, 10 Strathairn Ave, Kingston, Jamaica**, and a LinkedIn link in each
+footer. Facebook / Instagram icons were removed pending real profiles.
 
 Search the project for `TODO:` to find them all.
 
@@ -189,5 +191,5 @@ of Jamaica) before enabling it.
 
 ## License / ownership
 
-All site content and the ESJ Law Offices brand are the property of
-Elizabeth L. Salmon-James / ESJ Law Offices. Not licensed for reuse.
+All site content and the Elizabeth James-Salmon brand are the property of
+Elizabeth L. Salmon-James / Elizabeth James-Salmon. Not licensed for reuse.

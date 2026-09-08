@@ -1,5 +1,5 @@
 /* =========================================================================
-   ESJ Law Offices — main.js
+   Elizabeth James-Salmon — main.js
    Vanilla JS, no dependencies, no build step.
    ========================================================================= */
 (function () {
@@ -455,7 +455,7 @@
           form.reset();
           showStatus(
             "success",
-            "Thank you — your message has been sent. Mrs. Salmon-James’s office will respond as soon as possible."
+            "Thank you — your message has been sent. Mrs. Salmon-James’ office will respond as soon as possible."
           );
           if (statusEl) statusEl.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "center" });
         })

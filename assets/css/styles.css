@@ -1,5 +1,5 @@
 /* =========================================================================
-   ESJ Law Offices — styles.css
+   Elizabeth James-Salmon — styles.css
    Palette sampled from source-materials/logo.png
    navy  #011f4b   gold  #c9a227   cream #f8f5ee
    ========================================================================= */
@@ -810,6 +810,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 }
 .footer-bottom p { margin: 0; font-size: .85rem; }
 .footer-bottom .disclaimer { max-width: 46rem; opacity: .8; }
+.footer-disclaimers { display: grid; gap: .5rem; max-width: 46rem; }
 
 /* ----------------------------- Back to top ----------------------- */
 .back-to-top {

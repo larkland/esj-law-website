@@ -1,4 +1,4 @@
-# Netlify configuration for ESJ Law Offices
+# Netlify configuration for the Elizabeth James-Salmon website
 # This site is 100% static — there is nothing to build.
 
 [build]
@@ -39,4 +39,9 @@
 [[redirects]]
   from = "/contact"
   to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
   status = 200
