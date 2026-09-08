@@ -951,6 +951,8 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   height: clamp(220px, 34vw, 380px);
   object-fit: cover;
   object-position: 50% 42%;
+  scale: 1.18;            /* headroom for the scroll-parallax drift (main.js) */
+  will-change: translate;
 }
 .media-band figcaption {
   padding: var(--space-3) var(--space-4);
@@ -959,23 +961,22 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   background: var(--white);
   border-top: 1px solid var(--border);
 }
-/* Match the card system: gentle lift + slow zoom on hover. */
+/* Match the card system: gentle lift + slow zoom on hover. Parallax drift
+   (main.js) sets `translate`; hover sets `scale`; the two individual
+   transform properties compose without fighting each other. */
 .media-band { transition: box-shadow .25s var(--ease), border-color .25s var(--ease); }
-.media-band img { transition: transform .7s var(--ease); }
+.media-band img { transition: scale .7s var(--ease); }
 @media (hover: hover) {
   .media-band:hover { box-shadow: var(--shadow-md); border-color: var(--gold); }
-  .media-band:hover img { transform: scale(1.045); }
+  .media-band:hover img { scale: 1.24; }
 }
 
 /* ---------------------- Photo-backed navy sections --------------------- */
 /* A navy section (page hero, or the home "why choose us" band) with a faint
    photo behind it — the same photo + navy-wash + gold-glow treatment as the
-   home hero, so the imagery feels like one system. The photo drifts with a
-   very slow Ken Burns pan; both are dropped for prefers-reduced-motion. */
-@keyframes kenburns {
-  from { transform: scale(1.03) translate3d(0, 0, 0); }
-  to   { transform: scale(1.12) translate3d(-1.6%, -1.8%, 0); }
-}
+   home hero, so the imagery feels like one system. The photo drifts slowly
+   as the section scrolls past (scroll-linked parallax in main.js); held
+   completely still for prefers-reduced-motion. */
 .has-photo-bg { position: relative; overflow: hidden; }
 .has-photo-bg > .container { position: relative; z-index: 1; }
 .photo-bg {
@@ -992,8 +993,8 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   object-fit: cover;
   object-position: 50% 40%;
   opacity: .92;
-  animation: kenburns 40s var(--ease) alternate infinite;
-  will-change: transform;
+  scale: 1.18;            /* headroom for the scroll-parallax drift (main.js) */
+  will-change: translate;
 }
 .photo-bg::after {
   content: "";
@@ -1070,9 +1071,14 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   /* main.js skips the parallax entirely when reduced motion is set, but
      guard here too in case the setting changes after load. */
   .hero-inner { transform: none !important; opacity: 1 !important; }
-  /* Hold the Ken Burns / hover-zoom photos completely still. */
+  /* Hold the parallax / hover-zoom photos completely still. */
   .photo-bg img,
-  .media-band img { animation: none !important; transform: none !important; }
+  .media-band img {
+    animation: none !important;
+    transform: none !important;
+    translate: none !important;
+    scale: 1 !important;
+  }
 }
 
 /* ----------------------- Print ----------------------------- */

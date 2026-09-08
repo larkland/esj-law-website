@@ -193,6 +193,26 @@
 
   var heroInner = document.querySelector(".hero .hero-inner");
   var heroSection = document.querySelector(".hero");
+
+  /* Photo-band parallax: the background <img> of each navy photo section and
+     each standalone photo band drifts vertically as it transits the viewport,
+     so it moves slower than the copy in front of it. Transit geometry is read
+     from the (untransformed) parent so the image's own drift never feeds back
+     in; the drift is written to `translate` only, in the shared rAF tick
+     below. The CSS scales these images up by SCALE so there is always
+     ((SCALE - 1) / 2) of the image height hidden on each edge; keeping the
+     drift below that margin means an edge is never exposed. */
+  var PARALLAX_SCALE = 1.18;
+  var parallaxSafe = ((PARALLAX_SCALE - 1) / 2) * 0.7; /* 0.063: 70% of margin */
+  var parallaxBands = Array.prototype.slice
+    .call(document.querySelectorAll(".photo-bg img, .media-band img"))
+    .map(function (img) {
+      return {
+        img: img,
+        box: img.closest(".photo-bg, .media-band") || img.parentNode || img
+      };
+    });
+
   var scrollTicking = false;
 
   var onScrollFx = function () {
@@ -217,6 +237,29 @@
         heroInner.style.opacity = (1 - k * 0.9).toFixed(3);
       }
     }
+
+    /* photo-band parallax: as each photo transits the viewport, drift it
+       vertically at a fraction of scroll speed. Amplitude is tied to the
+       image's own (untransformed) height so it always stays inside the
+       scaled-up image's hidden margin; also capped so tall backdrops stay
+       subtle. */
+    if (parallaxBands.length && !prefersReducedMotion) {
+      var vpH = window.innerHeight || document.documentElement.clientHeight || 1;
+      var vpHalf = vpH / 2;
+      for (var pi = 0; pi < parallaxBands.length; pi++) {
+        var pImg = parallaxBands[pi].img;
+        var pRect = parallaxBands[pi].box.getBoundingClientRect();
+        if (pRect.bottom < -240 || pRect.top > vpH + 240) continue;
+        var pMid = pRect.top + pRect.height / 2;
+        /* -1 (just below the viewport) -> 0 (centered) -> 1 (just above) */
+        var pProg = (vpHalf - pMid) / (vpHalf + pRect.height / 2);
+        if (pProg < -1) pProg = -1;
+        else if (pProg > 1) pProg = 1;
+        var pAmp = Math.min(pImg.offsetHeight * parallaxSafe, 46);
+        pImg.style.translate = "0 " + (pProg * pAmp).toFixed(1) + "px";
+      }
+    }
+
     scrollTicking = false;
   };
 
