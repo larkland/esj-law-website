@@ -199,17 +199,24 @@
      so it moves slower than the copy in front of it. Transit geometry is read
      from the (untransformed) parent so the image's own drift never feeds back
      in; the drift is written to `translate` only, in the shared rAF tick
-     below. The CSS scales these images up by SCALE so there is always
-     ((SCALE - 1) / 2) of the image height hidden on each edge; keeping the
-     drift below that margin means an edge is never exposed. */
-  var PARALLAX_SCALE = 1.18;
-  var parallaxSafe = ((PARALLAX_SCALE - 1) / 2) * 0.7; /* 0.063: 70% of margin */
+     below.
+
+     Each image is scaled up in CSS (see `scale:` on `.photo-bg img` /
+     `.media-band img`), so ((scale - 1) / 2) of its height is hidden past
+     each edge. We read that scale here, once, and cap the drift at
+     PARALLAX_MARGIN_USE of the resulting margin — so a bigger CSS scale
+     directly buys a bigger, still edge-safe drift. */
+  var PARALLAX_MARGIN_USE = 0.78; /* fraction of the hidden margin we may use */
+  var PARALLAX_MAX = 50;          /* hard cap (px) so tall backdrops stay calm */
   var parallaxBands = Array.prototype.slice
     .call(document.querySelectorAll(".photo-bg img, .media-band img"))
     .map(function (img) {
+      var raw = window.getComputedStyle(img).scale; /* "1.42", "1.42 1.42" or "none" */
+      var scale = raw && raw !== "none" ? parseFloat(raw) || 1 : 1;
       return {
         img: img,
-        box: img.closest(".photo-bg, .media-band") || img.parentNode || img
+        box: img.closest(".photo-bg, .media-band") || img.parentNode || img,
+        margin: Math.max(0, (scale - 1) / 2) /* hidden fraction per edge */
       };
     });
 
@@ -239,24 +246,27 @@
     }
 
     /* photo-band parallax: as each photo transits the viewport, drift it
-       vertically at a fraction of scroll speed. Amplitude is tied to the
-       image's own (untransformed) height so it always stays inside the
-       scaled-up image's hidden margin; also capped so tall backdrops stay
-       subtle. */
+       vertically at a fraction of scroll speed. The peak drift is
+       PARALLAX_MARGIN_USE of the image's own hidden margin (its
+       untransformed height x the per-edge scale overshoot), so an edge is
+       never exposed; a hard cap keeps very tall backdrops calm. */
     if (parallaxBands.length && !prefersReducedMotion) {
       var vpH = window.innerHeight || document.documentElement.clientHeight || 1;
       var vpHalf = vpH / 2;
       for (var pi = 0; pi < parallaxBands.length; pi++) {
-        var pImg = parallaxBands[pi].img;
-        var pRect = parallaxBands[pi].box.getBoundingClientRect();
+        var band = parallaxBands[pi];
+        var pRect = band.box.getBoundingClientRect();
         if (pRect.bottom < -240 || pRect.top > vpH + 240) continue;
         var pMid = pRect.top + pRect.height / 2;
         /* -1 (just below the viewport) -> 0 (centered) -> 1 (just above) */
         var pProg = (vpHalf - pMid) / (vpHalf + pRect.height / 2);
         if (pProg < -1) pProg = -1;
         else if (pProg > 1) pProg = 1;
-        var pAmp = Math.min(pImg.offsetHeight * parallaxSafe, 46);
-        pImg.style.translate = "0 " + (pProg * pAmp).toFixed(1) + "px";
+        var pAmp = Math.min(
+          band.img.offsetHeight * band.margin * PARALLAX_MARGIN_USE,
+          PARALLAX_MAX
+        );
+        band.img.style.translate = "0 " + (pProg * pAmp).toFixed(1) + "px";
       }
     }
 

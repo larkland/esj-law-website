@@ -951,7 +951,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   height: clamp(220px, 34vw, 380px);
   object-fit: cover;
   object-position: 50% 42%;
-  scale: 1.18;            /* headroom for the scroll-parallax drift (main.js) */
+  scale: 1.34;            /* hidden margin the scroll-parallax drift moves within (main.js) */
   will-change: translate;
 }
 .media-band figcaption {
@@ -968,7 +968,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .media-band img { transition: scale .7s var(--ease); }
 @media (hover: hover) {
   .media-band:hover { box-shadow: var(--shadow-md); border-color: var(--gold); }
-  .media-band:hover img { scale: 1.24; }
+  .media-band:hover img { scale: 1.4; }
 }
 
 /* ---------------------- Photo-backed navy sections --------------------- */
@@ -993,7 +993,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   object-fit: cover;
   object-position: 50% 40%;
   opacity: .92;
-  scale: 1.18;            /* headroom for the scroll-parallax drift (main.js) */
+  scale: 1.42;            /* hidden margin the scroll-parallax drift moves within (main.js) */
   will-change: translate;
 }
 .photo-bg::after {
