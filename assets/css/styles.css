@@ -735,17 +735,27 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border);
-  aspect-ratio: 16 / 10;
-  background:
-    repeating-linear-gradient(45deg, rgba(1,31,75,.05) 0 14px, transparent 14px 28px),
-    var(--cream-200);
-  display: grid;
-  place-items: center;
-  text-align: center;
-  color: var(--muted);
-  padding: var(--space-5);
-  font-size: .9rem;
+  background: var(--cream-200);
+  line-height: 0;
 }
+.map-embed iframe {
+  display: block;
+  width: 100%;
+  height: 350px;
+  border: 0;
+}
+@media (max-width: 560px) {
+  .map-embed iframe { height: 260px; }
+}
+.map-directions {
+  display: inline-block;
+  margin-top: var(--space-3);
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--navy-700);
+  text-decoration: none;
+}
+.map-directions:hover { color: var(--gold); }
 
 /* ------------------------------- Socials --------------------------- */
 .social-row { display: flex; gap: .6rem; flex-wrap: wrap; }
