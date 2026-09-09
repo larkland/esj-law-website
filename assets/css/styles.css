@@ -651,6 +651,20 @@ a.practice-card:hover .pc-more svg { transform: translateX(3px); }
 .timeline .t-year { font-family: var(--font-serif); font-weight: 700; color: var(--navy); }
 
 /* ------------------------------- Contact --------------------------- */
+/* Photo + welcome copy sitting above the form. Two columns on desktop
+   (image one side, intro + practice-area pointer the other), stacked on
+   mobile. The photo itself reuses .media-band for the rounded card,
+   hairline border, soft shadow and slow hover-zoom. */
+.contact-intro {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: var(--space-7);
+  align-items: center;
+}
+.contact-intro .media-band { margin: 0; }
+.contact-intro-copy > * + * { margin-top: var(--space-4); }
+.contact-intro-copy h2 { margin: 0; }
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -1015,6 +1029,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 @media (max-width: 960px) {
   .split { grid-template-columns: 1fr; }
   .portrait { position: static; max-width: 360px; }
+  .contact-intro { grid-template-columns: 1fr; gap: var(--space-5); }
   .contact-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
