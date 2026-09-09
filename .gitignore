@@ -32,3 +32,7 @@ yarn-error.log*
 *.log
 .env
 .env.*
+
+# --- Local tooling / working files (keep out of the public repo) ---
+.claude/
+source-materials/
