@@ -1,6 +1,6 @@
-# Elizabeth James-Salmon — marketing website
+# Elizabeth Salmon-James — marketing website
 
-A fast, fully static marketing website for **Elizabeth James-Salmon** (the registered
+A fast, fully static marketing website for **Elizabeth Salmon-James** (the registered
 practice name), the practice of
 **Elizabeth L. Salmon-James, Attorney-at-Law & Notary Public**.
 
@@ -133,7 +133,7 @@ Contact details are now live sitewide: phone **876-615-5169** (plus
 **+1 876-754-0043** on the Contact page), email **info@salmonlawoffices.com**
 (general) and **esalmon@salmonlawoffices.com** (direct), office hours
 **Mon–Thurs 8:30am–4:30pm, Fri 8:30am–4:00pm**, address
-**2A, 10 Strathairn Ave, Kingston, Jamaica**, and a LinkedIn link in each
+**2A Strathairn Avenue, Kingston 10, Jamaica**, and a LinkedIn link in each
 footer. Facebook / Instagram icons were removed pending real profiles.
 
 Search the project for `TODO:` to find them all.
@@ -191,5 +191,5 @@ of Jamaica) before enabling it.
 
 ## License / ownership
 
-All site content and the Elizabeth James-Salmon brand are the property of
-Elizabeth L. Salmon-James / Elizabeth James-Salmon. Not licensed for reuse.
+All site content and the Elizabeth Salmon-James brand are the property of
+Elizabeth L. Salmon-James / Elizabeth Salmon-James. Not licensed for reuse.

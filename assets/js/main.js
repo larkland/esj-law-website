@@ -1,5 +1,5 @@
 /* =========================================================================
-   Elizabeth James-Salmon — main.js
+   Elizabeth Salmon-James — main.js
    Vanilla JS, no dependencies, no build step.
    ========================================================================= */
 (function () {
