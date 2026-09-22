@@ -616,7 +616,8 @@ a.practice-card:hover .pc-more svg { transform: translateX(3px); }
 }
 .cred-list li {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 10px 6rem 1fr;
+  align-items: start;
   gap: .75rem;
   padding: var(--space-4);
   background: var(--white);
@@ -630,7 +631,13 @@ a.practice-card:hover .pc-more svg { transform: translateX(3px); }
   border-radius: 3px;
   background: var(--gold);
 }
-.cred-list .yr { font-weight: 700; color: var(--navy); font-family: var(--font-serif); }
+.cred-list .yr {
+  font-weight: 700;
+  color: var(--navy);
+  font-family: var(--font-serif);
+  text-align: right;
+  white-space: nowrap;
+}
 
 .timeline { list-style: none; padding: 0; display: grid; gap: 0; }
 .timeline li {
